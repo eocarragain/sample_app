@@ -3,3 +3,12 @@ rvm:
   - "2.0.0"
 # uncomment this line if your project needs to run something other than `rake`:
 # script: bundle exec rspec spec
+before_script:
+  - cp config/database.travis.yml config/database.yml
+
+notifications:
+  email:
+    recipients:
+      - lutz.biedinger@gmail.com
+    on_success: never
+    on_failure: always
