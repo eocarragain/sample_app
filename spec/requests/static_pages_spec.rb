@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Static pages" do
 
-  let(:base_title) { "#{base_title}" }
+  let(:base_title) { "Ruby on Rails Tutorial Sample App" }
 
   describe "Home page" do
 
