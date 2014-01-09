@@ -1,5 +1,6 @@
 SampleApp::Application.routes.draw do
   get "static_pages/home"
+  #LUTZ COMMENT & Eoghan
   #DOUBLE LUTZ COMMENT
   get "static_pages/help"
   # The priority is based upon order of creation: first created -> highest priority.
