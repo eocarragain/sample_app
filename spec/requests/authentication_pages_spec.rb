@@ -34,7 +34,8 @@ describe "Authentication" do
 
     describe "with valid information" do
       let(:user) { FactoryGirl.create(:user) }
-      before { valid_signin(user) }
+      before { sign_in user }
+      #before { valid_signin(user) }
 
       it_should_behave_like "the signed-in profile page"
 
