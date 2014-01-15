@@ -3,43 +3,43 @@ require 'spec_helper'
 describe "User pages" do
 
   subject { page }
+  before(:all) { 30.times { FactoryGirl.create(:user) } }
+  after(:all)  { User.delete_all }
 
   describe "index" do
-    let(:user) { FactoryGirl.create(:user) }
 
-    before(:each) do
-      sign_in user
-      visit users_path
-    end
+    describe "as non-admin user" do
+      let(:user) { FactoryGirl.create(:user) }
 
-    it { should have_title('All users') }
-    it { should have_content('All users') }
+      before(:each) do
+        sign_in user
+        visit users_path
+      end
 
-    describe "pagination" do
+      it { should have_title('All users') }
+      it { should have_content('All users') }
 
-      before(:all) { 30.times { FactoryGirl.create(:user) } }
-      after(:all)  { User.delete_all }
+      describe "pagination" do
+        it { should have_selector('div.pagination') }
 
-      it { should have_selector('div.pagination') }
-
-      it "should list each user" do
-        User.paginate(page: 1).each do |user|
-          expect(page).to have_selector('li', text: user.name)
+        it "should list each user" do
+          User.paginate(page: 1).each do |user|
+            expect(page).to have_selector('li', text: user.name)
+          end
         end
       end
-    end
-
-    describe "delete links" do
 
       it { should_not have_link('delete') }
+    end
 
-      describe "as an admin user" do
-        let(:admin) { FactoryGirl.create(:admin) }
-        before do
-          sign_in admin
-          visit users_path
-        end
+    describe "as admin user" do
+      let(:admin) { FactoryGirl.create(:admin) }
+      before do
+        sign_in admin
+        visit users_path
+      end
 
+      describe "delete links" do
         it { should have_link('delete', href: user_path(User.first)) }
         it "should be able to delete another user" do
           expect do

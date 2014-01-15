@@ -101,6 +101,11 @@ describe "Authentication" do
         before { post users_path }
         specify { expect(response).to redirect_to(root_url) }
       end
+
+      describe "submitting a GET request to the Sessions#new action" do
+       before { get new_session_path }
+       specify { expect(response).to redirect_to(user_path(user)) }
+      end
     end
 
     describe "as wrong user" do
