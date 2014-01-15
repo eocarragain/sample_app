@@ -30,7 +30,7 @@ describe "Authentication" do
       let(:user) { FactoryGirl.create(:user) }
       before { valid_signin(user) }
 
-      it { should have_signedin_user_profile_info(user) }
+      it_should_behave_like "the signed-in profile page"
 
       describe "followed by signout" do
         before { click_link "Sign out" }
@@ -75,6 +75,7 @@ describe "Authentication" do
         describe "visiting the user index" do
           before { visit users_path }
           it { should have_title('Sign in') }
+          it { should have_notice_message('Please sign in.') }
         end
       end
     end
