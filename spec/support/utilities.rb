@@ -21,28 +21,12 @@ def sign_in(user, options={})
   end
 end
 
-RSpec::Matchers.define :have_error_message do |message|
-  match do |page|
-    expect(page).to have_selector('div.alert.alert-error', text: message)
-  end
-end
-
-
-RSpec::Matchers.define :have_success_message do |message|
-  match do |page|
-    expect(page).to have_selector('div.alert.alert-success', text: message)
-  end
-end
-
-
-RSpec::Matchers.define :have_signedin_user_profile_info do |user|
-  match do |page|
-
-      page { should have_title(user.name) }
-      page { should have_link('Users',       href: users_path) }
-      page { should have_link('Settings',    href: edit_user_path(user)) }
-      page { should have_link('Profile',     href: user_path(user)) }
-      page { should have_link('Sign out',    href: signout_path) }
-      page { should_not have_link('Sign in', href: signin_path) }
-  end
+# Page contents
+shared_examples_for "the signed-in profile page" do
+  it { should have_title(user.name) }
+  it { should have_link('Users',       href: users_path) }
+  it { should have_link('Settings',    href: edit_user_path(user)) }
+  it { should have_link('Profile',     href: user_path(user)) }
+  it { should have_link('Sign out',    href: signout_path) }
+  it { should_not have_link('Sign in', href: signin_path) }
 end
