@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :signed_in_user, only: [:new]
+  before_action :non_signed_in_user, only: [:new]
 
   def new
   end
@@ -24,7 +24,7 @@ end
 
     # Before filters
 
-    def signed_in_user
+    def non_signed_in_user
       if signed_in?
         redirect_to user_path(current_user), notice: "Already signed in as #{current_user.name}."
       end
